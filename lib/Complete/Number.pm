@@ -34,10 +34,10 @@ $SPEC{complete_int} = {
     summary => 'Complete integer number',
     args => {
         %common_args,
-        max  => ['int'],
-        min  => ['int'],
-        xmax => ['int'],
-        xmin => ['int'],
+        max  => { schema=>['int'] },
+        min  => { schema=>['int'] },
+        xmax => { schema=>['int'] },
+        xmin => { schema=>['int'] },
     },
     result_naked => 1,
     result => {
@@ -45,6 +45,8 @@ $SPEC{complete_int} = {
     },
 };
 sub complete_int {
+    require Complete::Util;
+
     my %args = @_;
     my $word = $args{word} // "";
     my $ci   = $args{ci} // $Complete::OPT_CI;
@@ -86,8 +88,7 @@ sub complete_int {
         }
     }
 
-    @words = sort {$a cmp $b} @words;
-    \@words;
+    Complete::Util::complete_array_elem(array=>\@words, word=>$word, ci=>$ci);
 }
 
 $SPEC{complete_float} = {
@@ -95,10 +96,10 @@ $SPEC{complete_float} = {
     summary => 'Complete floating number',
     args => {
         %common_args,
-        max  => ['float'],
-        min  => ['float'],
-        xmax => ['float'],
-        xmin => ['float'],
+        max  => { schema=>['float'] },
+        min  => { schema=>['float'] },
+        xmax => { schema=>['float'] },
+        xmin => { schema=>['float'] },
     },
     result_naked => 1,
     result => {
@@ -106,6 +107,8 @@ $SPEC{complete_float} = {
     },
 };
 sub complete_float {
+    require Complete::Util;
+
     my %args = @_;
     my $word = $args{word} // "";
     my $ci   = $args{ci} // $Complete::OPT_CI;
@@ -136,8 +139,7 @@ sub complete_float {
         }
     }
 
-    @words = sort {$a cmp $b} @words;
-    \@words;
+    Complete::Util::complete_array_elem(array=>\@words, word=>$word, ci=>$ci);
 }
 
 
