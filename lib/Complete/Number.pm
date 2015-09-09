@@ -9,7 +9,7 @@ use warnings;
 #use experimental 'smartmatch';
 #use Log::Any::IfLOG '$log';
 
-use Complete;
+use Complete::Setting;
 
 require Exporter;
 our @ISA       = qw(Exporter);
@@ -49,7 +49,7 @@ sub complete_int {
 
     my %args = @_;
     my $word = $args{word} // "";
-    my $ci   = $args{ci} // $Complete::OPT_CI;
+    my $ci   = $args{ci} // $Complete::Setting::OPT_CI;
 
     my @words;
 
@@ -111,7 +111,7 @@ sub complete_float {
 
     my %args = @_;
     my $word = $args{word} // "";
-    my $ci   = $args{ci} // $Complete::OPT_CI;
+    my $ci   = $args{ci} // $Complete::Setting::OPT_CI;
 
     my @words;
 
