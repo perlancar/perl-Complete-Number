@@ -9,7 +9,7 @@ use warnings;
 #use experimental 'smartmatch';
 #use Log::Any::IfLOG '$log';
 
-use Complete::Setting;
+use Complete::Common qw(:all);
 
 require Exporter;
 our @ISA       = qw(Exporter);
@@ -24,16 +24,11 @@ $SPEC{':package'} = {
     summary => 'Complete numbers',
 };
 
-my %common_args = (
-    word => { schema=>[str=>{default=>''}], pos=>0, req=>1 },
-    ci   => { schema=>['bool'] },
-);
-
 $SPEC{complete_int} = {
     v => 1.1,
     summary => 'Complete integer number',
     args => {
-        %common_args,
+        %arg_word,
         max  => { schema=>['int'] },
         min  => { schema=>['int'] },
         xmax => { schema=>['int'] },
@@ -49,7 +44,6 @@ sub complete_int {
 
     my %args = @_;
     my $word = $args{word} // "";
-    my $ci   = $args{ci} // $Complete::Setting::OPT_CI;
 
     my @words;
 
@@ -88,14 +82,14 @@ sub complete_int {
         }
     }
 
-    Complete::Util::complete_array_elem(array=>\@words, word=>$word, ci=>$ci);
+    Complete::Util::complete_array_elem(array=>\@words, word=>$word);
 }
 
 $SPEC{complete_float} = {
     v => 1.1,
     summary => 'Complete floating number',
     args => {
-        %common_args,
+        %arg_word,
         max  => { schema=>['float'] },
         min  => { schema=>['float'] },
         xmax => { schema=>['float'] },
@@ -111,7 +105,6 @@ sub complete_float {
 
     my %args = @_;
     my $word = $args{word} // "";
-    my $ci   = $args{ci} // $Complete::Setting::OPT_CI;
 
     my @words;
 
@@ -139,7 +132,7 @@ sub complete_float {
         }
     }
 
-    Complete::Util::complete_array_elem(array=>\@words, word=>$word, ci=>$ci);
+    Complete::Util::complete_array_elem(array=>\@words, word=>$word);
 }
 
 
